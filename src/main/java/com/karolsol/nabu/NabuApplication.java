@@ -1,0 +1,13 @@
+package com.karolsol.nabu;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class NabuApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(NabuApplication.class, args);
+	}
+
+}
