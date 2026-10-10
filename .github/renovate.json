@@ -2,5 +2,9 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
-  ]
+  ],
+  "semanticCommits": "enabled",
+  "semanticCommitScope": "{{depType}}",
+  "commitMessageTopic": "{{semanticCommitScope}} {{depName}}",
+  "commitMessageExtra": "to {{#if isPinDigest}}{{{newDigestShort}}}{{else}}{{#if isMajor}}{{newVersionMajor}}.x{{else}}{{#if isSingleVersion}}{{newVersion}}{{else}}{{{newValue}}}{{/if}}{{/if}}{{/if}}"
 }
