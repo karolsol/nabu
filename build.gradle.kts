@@ -1,7 +1,17 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.liquibase:liquibase-core:5.0.3")
+	}
+}
+
 plugins {
 	java
 	id("org.springframework.boot") version "4.1.1"
 	id("io.spring.dependency-management") version "1.1.7"
+	id("org.liquibase.gradle") version "3.1.0"
 }
 
 group = "com.karolsol"
@@ -19,7 +29,7 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.modulith:spring-modulith-bom:2.1.1"
+        mavenBom("org.springframework.modulith:spring-modulith-bom:2.1.1")
     }
 }
 
@@ -32,23 +42,43 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-webmvc")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:3.1.1")
 	implementation("org.springframework.modulith:spring-modulith-starter-core")
+
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("org.postgresql:postgresql")
 	annotationProcessor("org.projectlombok:lombok")
-	testImplementation("org.springframework.boot:spring-boot-starter-data-jpa-test")
-	testImplementation("org.springframework.boot:spring-boot-starter-hateoas-test")
-	testImplementation("org.springframework.boot:spring-boot-starter-liquibase-test")
-	testImplementation("org.springframework.boot:spring-boot-starter-restclient-test")
-	testImplementation("org.springframework.boot:spring-boot-starter-security-test")
-	testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
+
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-validation")
 	testImplementation("org.springframework.modulith:spring-modulith-starter-test")
-	testCompileOnly("org.projectlombok:lombok")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-	testAnnotationProcessor("org.projectlombok:lombok")
+
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
+
+	val liquibaseRuntime = configurations.getByName("liquibaseRuntime")
+	liquibaseRuntime("info.picocli:picocli:4.7.6")
+	liquibaseRuntime("org.liquibase.ext:liquibase-hibernate7:5.0.4")
+	liquibaseRuntime(sourceSets.main.get().output)
+}
+
+configurations.named("liquibaseRuntime") {
+	extendsFrom(configurations.runtimeClasspath.get())
 }
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+liquibase {
+	activities.register("main") {
+		this.arguments = mapOf(
+			"changelogFile" to "src/main/resources/db/changelog/db.changelog-master.yaml",
+			"url" to "jdbc:postgresql://localhost:5432/nabu",
+			"username" to "admin",
+			"password" to "password",
+			"driver" to "org.postgresql.Driver",
+			"referenceUrl" to "hibernate:spring:com.karolsol.nabu?dialect=org.hibernate.dialect.PostgreSQLDialect",
+			"referenceDriver" to "liquibase.ext.hibernate.database.connection.HibernateDriver"
+		)
+	}
+	runList = "main"
 }
