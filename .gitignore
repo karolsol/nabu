@@ -12,3 +12,6 @@ build/
 *.iml
 *.ipr
 out/
+/gradlew
+/gradlew.bat
+/gradle/

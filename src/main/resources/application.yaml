@@ -13,6 +13,9 @@ spring:
       ddl-auto: validate
     show-sql: true
 
+server:
+  forward-headers-strategy: native
+
 liquibase:
   enabled: true
   change-log: classpath:db/changelog/db.changelog-master.yaml

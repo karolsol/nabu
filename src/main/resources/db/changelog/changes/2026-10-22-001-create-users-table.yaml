@@ -1,0 +1,67 @@
+databaseChangeLog:
+- changeSet:
+    id: 1792681683750-1
+    author: karolsol (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: usersPK
+            name: id
+            type: UUID
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP(6) WITH TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: email
+            type: VARCHAR(254)
+        - column:
+            constraints:
+              nullable: false
+            name: first_name
+            type: VARCHAR(100)
+        - column:
+            name: last_login_at
+            type: TIMESTAMP(6) WITH TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: last_name
+            type: VARCHAR(100)
+        - column:
+            constraints:
+              nullable: false
+            name: password_hash
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: preferred_language
+            type: VARCHAR(10)
+        - column:
+            constraints:
+              nullable: false
+            name: time_zone
+            type: VARCHAR(50)
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: TIMESTAMP(6) WITH TIME ZONE
+        tableName: users
+- changeSet:
+    id: 1792681683750-2
+    author: karolsol (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: email
+        constraintName: UC_USERSEMAIL_COL
+        tableName: users
+
