@@ -6,5 +6,5 @@
   "semanticCommits": "enabled",
   "semanticCommitScope": "{{depType}}",
   "commitMessageTopic": "{{semanticCommitScope}} {{depName}}",
-  "commitMessageExtra": "to {{#if isPinDigest}}{{{newDigestShort}}}{{else}}{{#if isMajor}}{{newVersionMajor}}.x{{else}}{{#if isSingleVersion}}{{newVersion}}{{else}}{{{newValue}}}{{/if}}{{/if}}{{/if}}"
+  "commitMessageExtra": "to {{#if isPinDigest}}{{{newDigestShort}}}{{else}}{{#if isMajor}}{{newMajor}}.x{{else}}{{#if isSingleVersion}}{{newVersion}}{{else}}{{{newValue}}}{{/if}}{{/if}}{{/if}}"
 }
