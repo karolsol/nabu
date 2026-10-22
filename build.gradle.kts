@@ -62,7 +62,7 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
     val liquibaseRuntime = configurations.getByName("liquibaseRuntime")
-    liquibaseRuntime("info.picocli:picocli:4.7.6")
+    liquibaseRuntime("info.picocli:picocli:4.7.7")
     liquibaseRuntime("org.liquibase.ext:liquibase-hibernate7:5.0.4")
     liquibaseRuntime(sourceSets.main.get().output)
 }
