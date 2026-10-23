@@ -9,10 +9,10 @@ buildscript {
 
 plugins {
     java
-    id("org.springframework.boot") version "4.1.1"
-    id("io.spring.dependency-management") version "1.1.7"
-    id("org.liquibase.gradle") version "3.1.0"
-    id("io.freefair.lombok") version "9.8.2"
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.spring.dependency.management)
+    alias(libs.plugins.liquibase)
+    alias(libs.plugins.freefair.lombok)
 }
 
 group = "com.karolsol"
@@ -44,13 +44,14 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-webmvc")
     implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:3.1.1")
     implementation("org.springframework.modulith:spring-modulith-starter-core")
-	implementation("org.mapstruct:mapstruct:${mapstructVersion}")
+    implementation(libs.springdoc.openapi.webmvc.ui)
+    implementation(libs.mapstruct)
 
     runtimeOnly("org.postgresql:postgresql")
-	annotationProcessor("org.projectlombok:lombok-mapstruct-binding:0.2.0")
-	annotationProcessor("org.mapstruct:mapstruct-processor:$mapstructVersion")
+
+    annotationProcessor(libs.lombok.mapstruct.binding)
+    annotationProcessor(libs.mapstruct.processor)
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.modulith:spring-modulith-starter-test")
@@ -59,8 +60,8 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
     val liquibaseRuntime = configurations.getByName("liquibaseRuntime")
-    liquibaseRuntime("info.picocli:picocli:4.7.6")
-    liquibaseRuntime("org.liquibase.ext:liquibase-hibernate7:5.0.4")
+    liquibaseRuntime(libs.picocli)
+    liquibaseRuntime(libs.liquibase.hibernate)
     liquibaseRuntime(sourceSets.main.get().output)
 }
 
@@ -77,7 +78,8 @@ tasks.withType<JavaCompile> {
         listOf(
 			// Add @Component to generated mappers without adding componentModel = "spring" in every mapper
 			"-Amapstruct.defaultComponentModel=spring",
-			"-Amapstruct.unmappedTargetPolicy=ERROR"      // Fail compilation if a mapping is missing
+            // Fail compilation if a mapping is missing
+			"-Amapstruct.unmappedTargetPolicy=ERROR"
         )
     )
 }
