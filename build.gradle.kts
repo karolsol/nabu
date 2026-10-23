@@ -12,6 +12,7 @@ plugins {
     id("org.springframework.boot") version "4.1.1"
     id("io.spring.dependency-management") version "1.1.7"
     id("org.liquibase.gradle") version "3.1.0"
+    id("io.freefair.lombok") version "9.8.2"
 }
 
 group = "com.karolsol"
@@ -47,15 +48,11 @@ dependencies {
     implementation("org.springframework.modulith:spring-modulith-starter-core")
 	implementation("org.mapstruct:mapstruct:${mapstructVersion}")
 
-    compileOnly("org.projectlombok:lombok")
     runtimeOnly("org.postgresql:postgresql")
-    annotationProcessor("org.projectlombok:lombok")
-	annotationProcessor("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok-mapstruct-binding:0.2.0")
 	annotationProcessor("org.mapstruct:mapstruct-processor:$mapstructVersion")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.springframework.boot:spring-boot-starter-validation")
     testImplementation("org.springframework.modulith:spring-modulith-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
@@ -87,7 +84,7 @@ tasks.withType<JavaCompile> {
 
 liquibase {
     activities.register("main") {
-        this.arguments = mapOf(
+        arguments = mapOf(
             "changelogFile" to "src/main/resources/db/changelog/db.changelog-master.yaml",
             "url" to "jdbc:postgresql://localhost:5432/nabu",
             "username" to "admin",
