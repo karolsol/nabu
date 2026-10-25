@@ -1,3 +1,5 @@
+val mockitoAgent = configurations.create("mockitoAgent")
+
 buildscript {
     repositories {
         mavenCentral()
@@ -59,6 +61,8 @@ dependencies {
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
+    mockitoAgent("org.mockito:mockito-core") { isTransitive = false }
+
     val liquibaseRuntime = configurations.getByName("liquibaseRuntime")
     liquibaseRuntime(libs.picocli)
     liquibaseRuntime(libs.liquibase.hibernate)
@@ -71,6 +75,9 @@ configurations.named("liquibaseRuntime") {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+    jvmArgumentProviders.add(CommandLineArgumentProvider {
+        listOf("-javaagent:${mockitoAgent.asPath}")
+    })
 }
 
 tasks.withType<JavaCompile> {
