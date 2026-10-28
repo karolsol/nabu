@@ -1,7 +1,7 @@
 [versions]
 spring-boot = "4.1.1"
 spring-dependency-management = "1.1.7"
-liquibase-plugin = "3.1.0"
+liquibase-plugin = "3.1.1"
 freefair-lombok = "9.8.2"
 
 liquibase = "5.0.4"
