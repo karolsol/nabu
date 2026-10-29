@@ -9,6 +9,7 @@ errorprone-core = "2.51.0"
 nullaway = "0.14.3"
 
 liquibase = "5.0.4"
+spotless = "8.10.4"
 mapstruct = "1.6.3"
 lombok-mapstruct-binding = "0.2.0"
 springdoc = "3.2.0"
@@ -35,4 +36,4 @@ spring-dependency-management = { id = "io.spring.dependency-management", version
 liquibase = { id = "org.liquibase.gradle", version.ref = "liquibase-plugin" }
 freefair-lombok = { id = "io.freefair.lombok", version.ref = "freefair-lombok" }
 errorprone = { id = "net.ltgt.errorprone", version.ref = "errorprone-plugin" }
-
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
