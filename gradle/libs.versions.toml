@@ -4,6 +4,10 @@ spring-dependency-management = "1.1.7"
 liquibase-plugin = "3.1.1"
 freefair-lombok = "9.8.2"
 
+errorprone-plugin = "5.1.1"
+errorprone-core = "2.51.0"
+nullaway = "0.14.3"
+
 liquibase = "5.0.4"
 mapstruct = "1.6.3"
 lombok-mapstruct-binding = "0.2.0"
@@ -21,8 +25,14 @@ lombok-mapstruct-binding = { module = "org.projectlombok:lombok-mapstruct-bindin
 picocli = { module = "info.picocli:picocli", version.ref = "picocli" }
 liquibase-hibernate = { module = "org.liquibase.ext:liquibase-hibernate7", version.ref = "liquibase" }
 
+errorprone-core = { module = "com.google.errorprone:error_prone_core", version.ref = "errorprone-core" }
+nullaway = { module = "com.uber.nullaway:nullaway", version.ref = "nullaway" }
+jspecify = { module = "org.jspecify:jspecify", version = "1.0.0" }
+
 [plugins]
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
 spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependency-management" }
 liquibase = { id = "org.liquibase.gradle", version.ref = "liquibase-plugin" }
 freefair-lombok = { id = "io.freefair.lombok", version.ref = "freefair-lombok" }
+errorprone = { id = "net.ltgt.errorprone", version.ref = "errorprone-plugin" }
+

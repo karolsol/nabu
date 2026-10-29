@@ -15,7 +15,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users", schema = "user_module")
+@Table(name = "users")
 public class UserEntity {
     @Id
     @GeneratedValue

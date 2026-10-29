@@ -1,3 +1,6 @@
+import net.ltgt.gradle.errorprone.errorprone
+import net.ltgt.gradle.errorprone.CheckSeverity
+
 val mockitoAgent = configurations.create("mockitoAgent")
 
 buildscript {
@@ -15,6 +18,7 @@ plugins {
     alias(libs.plugins.spring.dependency.management)
     alias(libs.plugins.liquibase)
     alias(libs.plugins.freefair.lombok)
+    alias(libs.plugins.errorprone)
 }
 
 group = "com.karolsol"
@@ -50,6 +54,11 @@ dependencies {
     implementation(libs.springdoc.openapi.webmvc.ui)
     implementation(libs.mapstruct)
 
+    implementation(libs.jspecify)
+
+    errorprone(libs.errorprone.core)
+    errorprone(libs.nullaway)
+
     runtimeOnly("org.postgresql:postgresql")
 
     annotationProcessor(libs.lombok.mapstruct.binding)
@@ -83,12 +92,30 @@ tasks.withType<Test> {
 tasks.withType<JavaCompile> {
     options.compilerArgs.addAll(
         listOf(
-			// Add @Component to generated mappers without adding componentModel = "spring" in every mapper
-			"-Amapstruct.defaultComponentModel=spring",
+	       // Add @Component to generated mappers without adding componentModel = "spring" in every mapper
+            "-Amapstruct.defaultComponentModel=spring",
             // Fail compilation if a mapping is missing
-			"-Amapstruct.unmappedTargetPolicy=ERROR"
+            "-Amapstruct.unmappedTargetPolicy=ERROR"
         )
     )
+
+    // Fail compliation on all javac warning
+    options.compilerArgs.add("-Werror")
+
+    options.errorprone {
+        check("NullAway", CheckSeverity.ERROR)
+        option("NullAway:AnnotatedPackages", "com.karolsol")
+        option("NullAway:JSpecifyMode", "true")
+
+        // Ignore generated code (MapStruct, Lombok, etc.) to avoid false positives
+        disableWarningsInGeneratedCode = true
+        excludedPaths = ".*/build/generated/.*"
+    }
+}
+
+// Disable NullAway for test code, as it is not necessary to enforce nullability checks in tests and it don't like mockito-generated code
+tasks.named<JavaCompile>("compileTestJava") {
+    options.errorprone.disable("NullAway")
 }
 
 liquibase {
