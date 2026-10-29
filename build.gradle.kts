@@ -65,6 +65,9 @@ dependencies {
     annotationProcessor(libs.lombok.mapstruct.binding)
     annotationProcessor(libs.mapstruct.processor)
 
+    testAnnotationProcessor(libs.lombok.mapstruct.binding)
+    testAnnotationProcessor(libs.mapstruct.processor)
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.modulith:spring-modulith-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
