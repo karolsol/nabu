@@ -1,4 +1,4 @@
-name: Gradle CI (Lint & Tests)
+name: Gradle CI (Spotless & Tests)
 
 on:
   pull_request:
@@ -24,9 +24,13 @@ jobs:
             src:
               - 'src/**'
 
-      - name: Setup asdf environment
+      - name: Set up JDK 25
         if: steps.filter.outputs.src == 'true'
-        uses: asdf-vm/actions/install@v3
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '25'
+          cache: 'gradle'
 
       - name: Run Spotless and Test
         if: steps.filter.outputs.src == 'true'
