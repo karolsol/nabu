@@ -19,6 +19,7 @@ plugins {
     alias(libs.plugins.liquibase)
     alias(libs.plugins.freefair.lombok)
     alias(libs.plugins.errorprone)
+    alias(libs.plugins.spotless)
 }
 
 group = "com.karolsol"
@@ -78,6 +79,29 @@ dependencies {
     liquibaseRuntime(sourceSets.main.get().output)
 }
 
+liquibase {
+    activities.register("main") {
+        arguments = mapOf(
+            "changelogFile" to "src/main/resources/db/changelog/db.changelog-master.yaml",
+            "url" to "jdbc:postgresql://localhost:5432/nabu",
+            "username" to "admin",
+            "password" to "password",
+            "driver" to "org.postgresql.Driver",
+            "referenceUrl" to "hibernate:spring:com.karolsol.nabu?dialect=org.hibernate.dialect.PostgreSQLDialect",
+            "referenceDriver" to "liquibase.ext.hibernate.database.connection.HibernateDriver"
+        )
+    }
+    runList = "main"
+}
+
+spotless {
+    java {
+        googleJavaFormat("1.30.0")
+        removeUnusedImports()
+        target("src/**/*.java")
+    }
+}
+
 configurations.named("liquibaseRuntime") {
     extendsFrom(configurations.runtimeClasspath.get())
 }
@@ -118,17 +142,3 @@ tasks.named<JavaCompile>("compileTestJava") {
     options.errorprone.disable("NullAway")
 }
 
-liquibase {
-    activities.register("main") {
-        arguments = mapOf(
-            "changelogFile" to "src/main/resources/db/changelog/db.changelog-master.yaml",
-            "url" to "jdbc:postgresql://localhost:5432/nabu",
-            "username" to "admin",
-            "password" to "password",
-            "driver" to "org.postgresql.Driver",
-            "referenceUrl" to "hibernate:spring:com.karolsol.nabu?dialect=org.hibernate.dialect.PostgreSQLDialect",
-            "referenceDriver" to "liquibase.ext.hibernate.database.connection.HibernateDriver"
-        )
-    }
-    runList = "main"
-}

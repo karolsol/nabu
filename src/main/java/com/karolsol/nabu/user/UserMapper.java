@@ -7,9 +7,9 @@ import org.mapstruct.Mapper;
 @Mapper
 public interface UserMapper {
 
-    UserDto toDto(UserEntity entity);
+  UserDto toDto(UserEntity entity);
 
-    UserPreferencesDto toDto(UserPreferences preferences);
+  UserPreferencesDto toDto(UserPreferences preferences);
 
-    UserPreferences toPreferences(UserPreferencesDto dto);
+  UserPreferences toPreferences(UserPreferencesDto dto);
 }

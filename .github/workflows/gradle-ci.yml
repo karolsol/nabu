@@ -1,0 +1,33 @@
+name: Gradle CI (Lint & Tests)
+
+on:
+  pull_request:
+    branches: [ "**" ]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  build-and-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check for changes in src/
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            src:
+              - 'src/**'
+
+      - name: Setup asdf environment
+        if: steps.filter.outputs.src == 'true'
+        uses: asdf-vm/actions/install@v3
+
+      - name: Run Spotless and Test
+        if: steps.filter.outputs.src == 'true'
+        run: gradle spotlessCheck test
