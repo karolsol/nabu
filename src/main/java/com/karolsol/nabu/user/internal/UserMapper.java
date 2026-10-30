@@ -1,7 +1,7 @@
-package com.karolsol.nabu.user;
+package com.karolsol.nabu.user.internal;
 
-import com.karolsol.nabu.user.internal.UserEntity;
-import com.karolsol.nabu.user.internal.UserPreferences;
+import com.karolsol.nabu.user.UserDto;
+import com.karolsol.nabu.user.UserPreferencesDto;
 import org.mapstruct.Mapper;
 
 @Mapper
