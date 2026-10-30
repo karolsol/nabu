@@ -7,7 +7,6 @@ import static org.mockito.Mockito.*;
 
 import com.karolsol.nabu.user.RegisterUserCommand;
 import com.karolsol.nabu.user.UserDto;
-import com.karolsol.nabu.user.UserMapper;
 import com.karolsol.nabu.user.UserRegistered;
 import com.karolsol.nabu.user.internal.exception.EmailAlreadyUsedException;
 import com.karolsol.nabu.user.internal.exception.UserNotFoundException;
