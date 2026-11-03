@@ -9,7 +9,7 @@ errorprone-core = "2.51.0"
 nullaway = "0.14.3"
 
 liquibase = "5.0.4"
-spotless = "8.10.4"
+spotless = "8.11.0"
 mapstruct = "1.6.3"
 lombok-mapstruct-binding = "0.2.0"
 springdoc = "3.2.0"
