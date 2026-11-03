@@ -6,6 +6,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 import com.karolsol.nabu.user.RegisterUserCommand;
+import com.karolsol.nabu.user.UserDeleted;
 import com.karolsol.nabu.user.UserDto;
 import com.karolsol.nabu.user.UserRegistered;
 import com.karolsol.nabu.user.internal.exception.EmailAlreadyUsedException;
@@ -224,6 +225,40 @@ class UserServiceTest {
           .hasMessage("User not found: " + id);
 
       verifyNoInteractions(userMapper);
+    }
+  }
+
+  @Nested
+  class DeleteById {
+    @Test
+    void should_delete_user_by_id() {
+      // Arrange
+      UUID id = UUID.randomUUID();
+      UserEntity user = UserEntity.builder().id(id).build();
+
+      when(userRepository.findById(id)).thenReturn(Optional.of(user));
+
+      // Act
+      userService.deleteById(id);
+
+      // Assert
+      verify(userRepository).delete(user);
+      verify(events).publishEvent(new UserDeleted(id, user.getEmail()));
+    }
+
+    @Test
+    void should_throw_exception_when_user_does_not_exist() {
+      // Arrange
+      UUID id = UUID.randomUUID();
+      when(userRepository.findById(id)).thenReturn(Optional.empty());
+
+      // Act & Assert
+      assertThatThrownBy(() -> userService.deleteById(id))
+          .isInstanceOf(UserNotFoundException.class)
+          .hasMessage("User not found: " + id);
+
+      verify(userRepository).findById(id);
+      verifyNoMoreInteractions(userRepository, events);
     }
   }
 }

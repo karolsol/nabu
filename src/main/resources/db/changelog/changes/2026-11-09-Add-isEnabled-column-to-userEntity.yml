@@ -1,0 +1,14 @@
+databaseChangeLog:
+- changeSet:
+    id: 1794225249066-1
+    author: karolsol (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: is_enabled
+            type: BOOLEAN
+        tableName: users
+

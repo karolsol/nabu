@@ -42,5 +42,8 @@ public class UserEntity {
   @Column(name = "last_login_at")
   private Instant lastLoginAt;
 
+  @Column(name = "is_enabled", nullable = false)
+  private boolean isEnabled;
+
   @Embedded private UserPreferences preferences;
 }
