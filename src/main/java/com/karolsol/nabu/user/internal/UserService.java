@@ -1,12 +1,14 @@
 package com.karolsol.nabu.user.internal;
 
 import com.karolsol.nabu.user.RegisterUserCommand;
+import com.karolsol.nabu.user.UserDeleted;
 import com.karolsol.nabu.user.UserDto;
 import com.karolsol.nabu.user.UserRegistered;
 import com.karolsol.nabu.user.internal.exception.EmailAlreadyUsedException;
 import com.karolsol.nabu.user.internal.exception.UserNotFoundException;
 import java.time.Instant;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -44,6 +46,8 @@ public class UserService {
             .lastName(command.lastName())
             .createdAt(now)
             .updatedAt(now)
+            .isEnabled(true)
+            .preferences(new UserPreferences("", ""))
             .build();
     try {
       user = userRepository.saveAndFlush(user);
@@ -60,5 +64,15 @@ public class UserService {
         .findById(id)
         .map(userMapper::toDto)
         .orElseThrow(() -> new UserNotFoundException(id));
+  }
+
+  @Transactional
+  public void deleteById(UUID id) {
+    Optional<UserEntity> user = userRepository.findById(id);
+    if (user.isEmpty()) {
+      throw new UserNotFoundException(id);
+    }
+    userRepository.delete(user.get());
+    events.publishEvent(new UserDeleted(user.get().getId(), user.get().getEmail()));
   }
 }

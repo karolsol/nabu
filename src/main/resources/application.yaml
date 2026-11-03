@@ -29,3 +29,9 @@ springdoc:
 
 server:
   forward-headers-strategy: native
+
+jwt:
+  secret: SUPEREXTREMESECRETKEYTHATISLONGERTHAN32CHARACTERSANDISUSEDFORTESTINGPURPOSESONLY
+  access-ttl: PT10M
+  refresh-ttl: P14D
+  secure-cookie: true

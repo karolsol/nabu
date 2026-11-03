@@ -17,6 +17,7 @@ class DomainExceptionHandler {
           case CONFLICT -> HttpStatus.CONFLICT;
           case INVALID -> HttpStatus.UNPROCESSABLE_CONTENT;
           case FORBIDDEN -> HttpStatus.FORBIDDEN;
+          case UNAUTHORIZED -> HttpStatus.UNAUTHORIZED;
         };
 
     ProblemDetail problem = ProblemDetail.forStatusAndDetail(status, e.getMessage());
