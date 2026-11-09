@@ -48,11 +48,7 @@ public class UserController {
   @PostMapping
   ResponseEntity<UserDto> register(@Valid @RequestBody RegisterUserCommand command) {
     UserDto created = userService.register(command);
-    URI location =
-        ServletUriComponentsBuilder.fromCurrentRequest()
-            .path("/{id}")
-            .buildAndExpand(created.id())
-            .toUri();
+    URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/me").build().toUri();
     return ResponseEntity.created(location).body(created);
   }
 

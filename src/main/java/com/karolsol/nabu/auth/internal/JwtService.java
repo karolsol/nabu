@@ -42,7 +42,8 @@ public class JwtService {
     JwtClaimsSet claims =
         JwtClaimsSet.builder()
             .issuedAt(now)
-            .expiresAt(now.plus(props.accessTtl()))
+            .expiresAt(
+                now.plus(type == JwtTokenType.REFRESH ? props.refreshTtl() : props.accessTtl()))
             .subject(String.valueOf(id))
             .claim("type", type.toString())
             .build();

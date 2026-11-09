@@ -1,6 +1,6 @@
 @ApplicationModule(
     displayName = "Auth",
-    allowedDependencies = {"shared"})
+    allowedDependencies = {"shared", "user"})
 package com.karolsol.nabu.auth;
 
 import org.springframework.modulith.ApplicationModule;

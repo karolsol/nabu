@@ -12,3 +12,9 @@ spring:
       include-stacktrace: never
       include-message: never
       include-binding-errors: never
+
+jwt:
+  secret: # Add your production secret key here, ensure it is at least 43 characters long
+  access-ttl: PT10M
+  refresh-ttl: P14D
+  secure-cookie: true # Set this to true if behind HTTPS reverse proxy, false if not
