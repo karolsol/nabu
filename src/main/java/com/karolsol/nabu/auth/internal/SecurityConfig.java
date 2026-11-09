@@ -54,7 +54,7 @@ public class SecurityConfig {
       if ("/api/v1/auth/refresh".equals(request.getServletPath())) {
         return null;
       }
-      if (request.getCookies() != null)
+      if (request.getCookies() != null) {
         return Arrays.stream(request.getCookies())
             .filter(cookie -> "access_token".equals(cookie.getName()))
             .map(Cookie::getValue)
