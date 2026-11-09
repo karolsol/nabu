@@ -2,6 +2,7 @@ package com.karolsol.nabu.auth.internal;
 
 import com.karolsol.nabu.auth.LoginUserCommand;
 import com.karolsol.nabu.auth.internal.exception.InvalidJwtTokenException;
+import com.karolsol.nabu.user.UserFacade;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,6 +19,7 @@ public class AuthService {
 
   private final AuthenticationManager authenticationManager;
   private final JwtService jwtService;
+  private final UserFacade userFacade;
 
   public AuthTokens login(LoginUserCommand command) {
     Authentication authentication =
@@ -37,7 +39,7 @@ public class AuthService {
     try {
       Jwt jwt = jwtService.decodeToken(token);
       String subject = jwt.getSubject();
-      if (subject == null) {
+      if (subject == null || !userFacade.existById(UUID.fromString(subject))) {
         throw new InvalidJwtTokenException();
       }
       return tokensFor(parseUserId(subject));

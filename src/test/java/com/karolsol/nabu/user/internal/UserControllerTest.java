@@ -75,7 +75,7 @@ class UserControllerTest {
                   .contentType(MediaType.APPLICATION_JSON)
                   .content(new ObjectMapper().writeValueAsString(command)))
           .andExpect(status().isCreated())
-          .andExpect(header().string("Location", "http://localhost/api/v1/users/" + id))
+          .andExpect(header().string("Location", "http://localhost/api/v1/users/me"))
           .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
           .andExpect(jsonPath("$.id").value(id.toString()))
           .andExpect(jsonPath("$.email").value("ada@example.com"))
