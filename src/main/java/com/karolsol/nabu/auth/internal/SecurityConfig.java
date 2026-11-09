@@ -51,7 +51,10 @@ public class SecurityConfig {
 
   private BearerTokenResolver cookieBearerTokenResolver() {
     return request -> {
-      if (request.getCookies() != null) {
+      if ("/api/v1/auth/refresh".equals(request.getServletPath())) {
+        return null;
+      }
+      if (request.getCookies() != null)
         return Arrays.stream(request.getCookies())
             .filter(cookie -> "access_token".equals(cookie.getName()))
             .map(Cookie::getValue)
