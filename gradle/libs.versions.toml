@@ -5,7 +5,7 @@ liquibase-plugin = "3.1.1"
 freefair-lombok = "9.8.3"
 
 errorprone-plugin = "5.2.0"
-errorprone-core = "2.52.0"
+errorprone-core = "2.53.0"
 nullaway = "0.14.4"
 
 liquibase = "5.0.4"
