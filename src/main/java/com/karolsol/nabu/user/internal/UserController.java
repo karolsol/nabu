@@ -4,7 +4,6 @@ import com.karolsol.nabu.shared.CurrentUserId;
 import com.karolsol.nabu.user.RegisterUserCommand;
 import com.karolsol.nabu.user.UserDto;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -66,7 +65,7 @@ public class UserController {
         content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
   })
   @GetMapping("/me")
-  UserDto get(@Parameter(hidden = true) @CurrentUserId UUID userId) {
+  UserDto get(@CurrentUserId UUID userId) {
     return userService.findById(userId);
   }
 
@@ -81,7 +80,7 @@ public class UserController {
         content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
   })
   @DeleteMapping("/me")
-  public ResponseEntity<Void> delete(@Parameter(hidden = true) @CurrentUserId UUID userId) {
+  public ResponseEntity<Void> delete(@CurrentUserId UUID userId) {
     userService.deleteById(userId);
     return ResponseEntity.noContent().build();
   }
