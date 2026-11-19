@@ -11,15 +11,7 @@ class DomainExceptionHandler {
 
   @ExceptionHandler(DomainException.class)
   ProblemDetail handle(DomainException e) {
-    HttpStatus status =
-        switch (e.category()) {
-          case NOT_FOUND -> HttpStatus.NOT_FOUND;
-          case CONFLICT -> HttpStatus.CONFLICT;
-          case INVALID -> HttpStatus.UNPROCESSABLE_CONTENT;
-          case FORBIDDEN -> HttpStatus.FORBIDDEN;
-          case UNAUTHORIZED -> HttpStatus.UNAUTHORIZED;
-        };
-
+    HttpStatus status = e.category();
     ProblemDetail problem = ProblemDetail.forStatusAndDetail(status, e.getMessage());
     problem.setProperty("code", e.code());
     return problem;
