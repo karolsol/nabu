@@ -13,7 +13,7 @@ spotless = "8.11.0"
 mapstruct = "1.6.3"
 lombok-mapstruct-binding = "0.2.0"
 springdoc = "3.2.0"
-modulith = "2.1.2"
+modulith = "2.2.0"
 picocli = "4.7.7"
 archunit = "1.5.1"
 
